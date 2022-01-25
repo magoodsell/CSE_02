@@ -20,9 +20,9 @@ class Director:
             self (Director): an instance of Director.
         """
 
-        self.is_playing = True
-        self.score = 0
-        self.total_score = 0
+        self.is_playing = 'y'
+        #self.score = 0
+        self.total_score = 300
 
         
 
@@ -32,52 +32,78 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        while self.is_playing:
+        while self.is_playing == 'y':
             self.get_inputs()
             self.do_updates()
             self.do_outputs()
+        
+
 
     def get_inputs(self):
-        """Ask the user if they want to roll.
+        """Ask the user if they want to go higher or lower.
 
         Args:
             self (Director): An instance of Director.
         """
-        roll_dice = input("Roll dice? [y/n] ")
-        self.is_playing = (roll_dice == "y")
+        # print(f'The Card is: {Deck.cards[-1]}') 
+        print(f'The Card is: {Deck.draw(self)}') 
 
-    def do_updates(self):
+        self.choice = input("Higher or lower [h/l] ")
+
+        self.game_status = input('Play again? [y/n] ')
+
+        return self.choice, self.game_status
+
+    def do_updates(self, game_status):
         """Updates the player's score.
 
         Args:
             self (Director): An instance of Director.
         """
-        if not self.is_playing:
-            return
+        current_score = Deck.score()
 
-        for i in range(len(self.dice)):
-            die = self.dice[i]
-            # print(die)
-            die.roll()
-            self.score += die.points
-            # print(self.score)
-        self.total_score += self.score
-        # print(self.total_score)
+        print(f'Next card is: {Deck.cards[-1]}')
 
-    def do_outputs(self):
-        """Displays the dice and the score. Also asks the player if they want to roll again. 
+        print(f'Your score is: {current_score}')
+
+        self.is_playing == game_status
+
+        return self.total_score + current_score
+        
+
+    def do_outputs(self, total_score):
+        """Displays the previous card, option to play 
 
         Args:
             self (Director): An instance of Director.
         """
-        if not self.is_playing:
-            return
+        current_card = Deck.draw(self)
 
-        values = ""
-        for i in range(len(self.dice)):
-            die = self.dice[i]
-            values += f"{die.value} "
 
-        print(f"You rolled: {values}")
-        print(f"Your score is: {self.total_score}\n")
-        self.is_playing == (self.score > 0)
+        print(f'Next card is: {current_card}')
+        print(f'Your score is: {total_score}')
+
+        
+        # print the previous card
+        # show the option to play
+        # show the next card 
+        # show their score
+
+    def score(self, choice, total_score):
+        '''
+        If card was higher add 100 points 
+
+        Args:
+            self (Die): An instance of Deck
+        '''
+
+        if choice == 'h' & self.cards[-2] < self.cards[-1]:
+            total_score + 100
+        elif choice == 'h' & self.cards[-2] > self.cards[-1]:
+            total_score - 75
+        elif choice == 'l' & self.cards[-2] > self.cards[-1]:
+            total_score + 100
+        elif choice == 'l' & self.cards[-2] < self.cards[-1]:
+            total_score - 75
+
+        return total_score

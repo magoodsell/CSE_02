@@ -1,22 +1,14 @@
 import random
 
 
-# TODO: Implement the Die class as follows...
-
-
-# 1) Add the class declaration. Use the following class comment.
-
 class Deck:
     """
 
-    The responsibility of Deck is to ...
+    The responsibility of Deck is to draw a random number from 1 to 13. 
 
     Attributes:
         
     """
-
-
-# 2) Create the class constructor. Use the following method comment.
 
     def __init__(self):
         """Constructs a new instance of Deck with a value and points attribute.
@@ -24,25 +16,41 @@ class Deck:
         Args:
             self (Die): An instance of Die.
         """
+        self.first_card = random.randint(1,13)
+        self.cards = [] 
+        self.current_card = None
+        #self.score = 0
 
-        self.value = 0
-        self.points = 0
-
-# 3) Create the roll(self) method. Use the following method comment.
-
-    def roll(self):
-        """
+        self.cards.append(self.first_card)
         
-        Args:
-            self (Die): An instance of Die.
+
+    def draw(self):
         """
 
-        self.value = random.randint(1, 6)
-        if self.value == 1:
-            self.points = 100
-        elif self.value == 5:
-            self.points = 50
-        else:
-            self.points = 0
+        Args:
+            self (Deck): An instance of Die.
+        """
 
-        return self.points
+        self.current_card = random.randint(1, 13)
+        # make sure to discard number if the same as previous and redraw
+
+        self.cards.append(self.current_card)
+
+        print(self.cards[-1])
+
+    def cards_list(self):
+        pass
+
+
+    # def score(self):
+    #     '''
+    #     If card was higher add 100 points 
+
+    #     Args:
+    #         self (Die): An instance of Deck
+    #     '''
+    #     if self.cards[-2] > self.cards[-1]:
+    #         self.points + 100
+    #     else:
+    #         self.points - 75
+        
