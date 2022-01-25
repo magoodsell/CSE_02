@@ -20,9 +20,11 @@ class Director:
             self (Director): an instance of Director.
         """
 
-        self.is_playing = 'y'
+        self.is_playing = True
         #self.score = 0
         self.total_score = 300
+
+        self.deck = Deck()
 
         
 
@@ -32,78 +34,77 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        while self.is_playing == 'y':
-            self.get_inputs()
-            self.do_updates()
+        #deck = Deck()
+
+        while self.is_playing == True:
+            #self.get_inputs(self.deck)
+            print(f'The card is: {self.deck.current_card}')
+            choice = self.get_inputs()
+            # self.do_updates(choice, self.total_score, self.deck.cards)
+            self.do_updates(choice, self.deck.cards)
             self.do_outputs()
+
         
 
 
     def get_inputs(self):
-        """Ask the user if they want to go higher or lower.
+        """Display the current card and Ask the user if they want to go higher or lower.
 
         Args:
             self (Director): An instance of Director.
         """
-        # print(f'The Card is: {Deck.cards[-1]}') 
-        print(f'The Card is: {Deck.draw(self)}') 
 
         self.choice = input("Higher or lower [h/l] ")
 
-        self.game_status = input('Play again? [y/n] ')
+        #self.is_playing == self.game_status
 
-        return self.choice, self.game_status
+        return self.choice
 
-    def do_updates(self, game_status):
+    #def do_updates(self, choice, cards):
+    def do_updates(self, choice, cards):
         """Updates the player's score.
 
         Args:
             self (Director): An instance of Director.
         """
-        current_score = Deck.score()
+        self.deck.draw()
 
-        print(f'Next card is: {Deck.cards[-1]}')
+        print(f'Next card is: {self.deck.cards[-1]}')
 
-        print(f'Your score is: {current_score}')
+        if choice == 'h' and cards[-2] < cards[-1]:
+            self.total_score += 1 * 100
+        elif choice == 'h' and cards[-2] > cards[-1]:
+            self.total_score -= 1 * 75
+        elif choice == 'l' and cards[-2] > cards[-1]:
+            self.total_score += 1 * 100
+        elif choice == 'l' and cards[-2] < cards[-1]:
+            self.total_score -= 1 * 75        
 
-        self.is_playing == game_status
+        print(f'Your score is: {self.total_score}')
 
-        return self.total_score + current_score
+        #self.is_playing == game_status
+
         
 
-    def do_outputs(self, total_score):
+    def do_outputs(self):
         """Displays the previous card, option to play 
 
         Args:
             self (Director): An instance of Director.
         """
-        current_card = Deck.draw(self)
 
+        game_status = input('Play again? [y/n] ')
+        if game_status == 'n':
+            self.is_playing == False
+        else: 
+            self.is_playing == True
 
-        print(f'Next card is: {current_card}')
-        print(f'Your score is: {total_score}')
+        # return self.is_playing == (input('Play again? [y/n] '))
+        
 
+        
         
         # print the previous card
         # show the option to play
         # show the next card 
         # show their score
-
-    def score(self, choice, total_score):
-        '''
-        If card was higher add 100 points 
-
-        Args:
-            self (Die): An instance of Deck
-        '''
-
-        if choice == 'h' & self.cards[-2] < self.cards[-1]:
-            total_score + 100
-        elif choice == 'h' & self.cards[-2] > self.cards[-1]:
-            total_score - 75
-        elif choice == 'l' & self.cards[-2] > self.cards[-1]:
-            total_score + 100
-        elif choice == 'l' & self.cards[-2] < self.cards[-1]:
-            total_score - 75
-
-        return total_score

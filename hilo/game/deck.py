@@ -11,17 +11,18 @@ class Deck:
     """
 
     def __init__(self):
-        """Constructs a new instance of Deck with a value and points attribute.
+        """Constructs a new instance of Deck.
 
         Args:
             self (Die): An instance of Die.
         """
         self.first_card = random.randint(1,13)
         self.cards = [] 
-        self.current_card = None
+        self.cards.append(self.first_card)
+        self.current_card = self.cards[-1]
         #self.score = 0
 
-        self.cards.append(self.first_card)
+        
         
 
     def draw(self):
@@ -36,21 +37,9 @@ class Deck:
 
         self.cards.append(self.current_card)
 
-        print(self.cards[-1])
+        #print(f'The card is: {self.cards[-1]}')
 
     def cards_list(self):
         pass
 
-
-    # def score(self):
-    #     '''
-    #     If card was higher add 100 points 
-
-    #     Args:
-    #         self (Die): An instance of Deck
-    #     '''
-    #     if self.cards[-2] > self.cards[-1]:
-    #         self.points + 100
-    #     else:
-    #         self.points - 75
         
