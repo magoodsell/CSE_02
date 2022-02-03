@@ -37,8 +37,8 @@ class Director:
         while self.is_playing == True:
             print(f'The card is: {self.deck.current_card}')
             choice = self.get_inputs()
-            self.do_updates(choice, self.deck.cards)
-            self.is_playing = self.do_outputs()
+            score = self.do_updates(choice, self.deck.cards)
+            self.is_playing = self.do_outputs(score)
 
         
 
@@ -77,18 +77,28 @@ class Director:
 
         print(f'Your score is: {self.total_score}')
 
+        return self.total_score
+
+        # if self.total_score <= 0:
+        #     return self.is_playing == False
+        # else: 
+        #     return self.is_playing == True
+
         
 
-    def do_outputs(self):
+    def do_outputs(self, total_score):
         """Prompts the user if they want to play agin.  
 
         Args:
             self (Director): An instance of Director.
         """
 
-        game_status = input('Play again? [y/n] ')
-        if game_status == 'n':
-           return self.is_playing == False
-        else: 
-            return self.is_playing == True
+        if total_score <= 0:
+            return self.is_playing == False 
+        else:
+            game_status = input('Play again? [y/n] ')
+            if game_status == 'n' or total_score <= 0:
+                return self.is_playing == False
+            else: 
+                return self.is_playing == True
         
