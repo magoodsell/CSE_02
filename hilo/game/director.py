@@ -65,7 +65,7 @@ class Director:
         self.deck.draw()
 
         print(f'Next card is: {self.deck.cards[-1]}')
-
+        # I (Dallan) worked on this part and thought of the logic to see if the card was higher or lower
         if choice == 'h' and cards[-2] < cards[-1]:
             self.total_score += 1 * 100
         elif choice == 'h' and cards[-2] > cards[-1]:
